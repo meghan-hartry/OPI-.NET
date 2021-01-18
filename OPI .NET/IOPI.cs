@@ -1,39 +1,32 @@
-﻿namespace OPI_.NET
+﻿using OPI_.NET.StimulusTypes;
+
+namespace OPI_.NET
 {
     /// <summary>
-    /// Abstract class for OPI implementations.
+    /// Interface class for devices implementating the OPI library.
     /// </summary>
     public interface IOPI
     {
         /// <summary>
-        /// Device OPI is implemented on.
+        /// Type of device OPI is implemented on.
         /// </summary>
         string DeviceType { get; set; }
+
+        /// <summary>
+        /// Device OPI is implemented on.
+        /// </summary>
+        IDevice Device { get; set; }
 
         /// <summary>
         /// Eye being tested.
         /// </summary>
         Eye Eye { get; set; }
 
-    //    /// <summary>
-    //    /// State of initialization.
-    //    /// </summary>
-    //    bool IsInitialized { get; private set; }
-
-    //    /// <summary>
-    //    /// Initialize the OPI implementation.
-    //    /// </summary>
-    //    public virtual void Initialize() 
-    //    {
-    //        this.IsInitialized = true;
-    //    }
-
-    //    /// <summary>
-    //    /// Release the OPI implementation.
-    //    /// </summary>
-    //    public virtual void Release() 
-    //    {
-    //        this.IsInitialized = false;
-    //    }
+        /// <summary>
+        /// Generic function for presentation of a stimulus.
+        /// </summary>
+        /// <param name="stimulus">Stimulus of any type.</param>
+        /// <returns><see cref="Response"/> to presentation.</returns>
+        Response Present(Stimulus stimulus);
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace OPI_.NET.StimulusTypes
+﻿namespace OPI_.NET.StimulusTypes
 {
     /// <summary>
     /// Properties shared by all types of stimulus.
@@ -8,9 +6,14 @@ namespace OPI_.NET.StimulusTypes
     public class Stimulus
     {
         /// <summary>
-        /// Coordinate of the center of stimulus in degrees relative to fixation.
+        /// Coordinate X of the center of stimulus in degrees relative to fixation.
         /// </summary>
-        public Point Coordinate { get; set; }
+        public double X { get; set; }
+
+        /// <summary>
+        /// Coordinate Y of the center of stimulus in degrees relative to fixation.
+        /// </summary>
+        public double Y { get; set; }
 
         /// <summary>
         /// The stimulus level in cd/m^2. 

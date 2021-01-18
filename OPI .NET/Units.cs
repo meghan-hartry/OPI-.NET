@@ -12,46 +12,33 @@ namespace OPI_.NET
     }
 
     /// <summary>
-    /// Possible units of measurement for <see cref="Distance"/>.
+    /// Class definition of a response object.
     /// </summary>
-    public enum DistanceUnit
+    public class Response
     {
         /// <summary>
-        /// HFA dB units.
+        /// Constructor requires Seen parameter to be set.
+        /// Time can also be set, but defaults to double.NaN.
         /// </summary>
-        dB,
+        public Response(bool seen, double time = double.NaN)
+        {
+            if (seen && double.IsNaN(time)) throw new Exception("If the stimulus is seen, response time cannot be null.");
+            if (seen && time <= 0) throw new Exception("Invalid response time.");
+
+            this.Seen = seen;
+            this.Time = time;
+        }
 
         /// <summary>
-        ///  Sigma is the standard deviation of the fitted FoS.
+        /// Response was detected in the allowed ResponseWindow.
         /// </summary>
-        sigma
-    }
-
-    /// <summary>
-    /// Response times to white-on-white Goldmann Size III targets for 12 subjects. 
-    /// </summary>
-    public class ResponseTime
-    {
-        /// <summary>
-        /// Reaction time in ms.
-        /// </summary>
-        public double ReactionTime { get; set; }
+        public bool Seen { get; set; }
 
         /// <summary>
-        /// Distance of stimuli from measured threshold in <see cref="DistanceUnit"/>.
-        /// The threshold was determined by post-hoc fit of a cummulative gaussian FoS curve to the data for each location and subject. 
+        /// The time in milliseconds from the onset (or offset) of the presentation until the response from the subject. 
+        /// Value should be double.NaN if <see cref="Seen"/> is false.
         /// </summary>
-        public double Distance { private get; set; }
-
-        /// <summary>
-        /// <see cref="Distance"/> is measured in dB or sigma units. Default is dB.
-        /// </summary>
-        public DistanceUnit DistanceUnit { get; set; } = DistanceUnit.dB;
-
-        /// <summary>
-        /// Identifier of each subject.
-        /// </summary>
-        public string Subject { get; set; }
+        public double Time { get; set; }
     }
 
     /// <summary>
@@ -65,9 +52,9 @@ namespace OPI_.NET
         /// <param name="db">Value to convert to cd/m2</param>
         /// <param name="maxStim">Stimulus value for 0dB in cd/m2</param>
         /// <returns>Returns cd/m2 value</returns>
-        public static double ToCandelaPerSquareMeter(this double db, double maxStim = 10000 / Math.PI)
+        public static double ToCandela(this double dB, double maxStim = 10000 / Math.PI)
         {
-            return Math.Pow(maxStim * 10, -db / 10);
+            return Math.Pow(maxStim * 10, -dB / 10);
         }
 
         /// <summary>
