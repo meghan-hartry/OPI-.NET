@@ -5,6 +5,20 @@ namespace OPI_.NET.StimulusTypes
     public class TemporalStimulus : Stimulus
     {
         /// <summary>
+        /// Public constructor set default values of stimulus.
+        /// </summary>
+        public TemporalStimulus(double x, double y, double level = 5, double size = 0.43, string color = "White", double duration = 200, double responseWindow = 1500)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Level = level;
+            this.Size = size;
+            this.Color = color;
+            this.Duration = duration;
+            this.ResponseWindow = responseWindow;
+        }
+
+        /// <summary>
         /// Frequency with which lut is processed in Hz.
         /// </summary>
         public double Rate { get; set; }

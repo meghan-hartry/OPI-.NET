@@ -47,27 +47,29 @@ namespace OPI_.NET
     public static class Conversions
     {
         /// <summary>
-        /// Given a value in dB, return the cd/m^2 equivalent. Default is to use HFA units, so maximum stimulus is 10000 apostilbs.
+        /// Given a value in dB, return the cd/m^2 equivalent.
         /// </summary>
         /// <param name="db">Value to convert to cd/m2</param>
         /// <param name="maxStim">Stimulus value for 0dB in cd/m2</param>
         /// <returns>Returns cd/m2 value</returns>
-        public static double ToCandela(this double dB, double maxStim = 10000 / Math.PI)
+        public static double ToCandela(this double dB, double maxStim)
         {
-            return Math.Pow(maxStim * 10, -dB / 10);
+            // If you don't cast to double, it concatenates as an integer.
+            return maxStim * Math.Pow(10, (double)-dB / 10);
         }
 
         /// <summary>
-        /// Given a value in cd/m2, return the dB equivalent. Default is to use HFA units, so maximum stimulus is 10000 apostilbs.
+        /// Given a value in cd/m2, return the dB equivalent.
         /// </summary>
         /// <param name="cd">Value to convert to dB in cd/m2</param>
         /// <param name="maxStim">Stimulus value for 0dB in cd/m2</param>
         /// <returns>Returns a dB value</returns>
-        public static double ToDecibel(this double cd, double maxStim = 10000 / Math.PI)
+        public static double ToDecibel(this double cd, double maxStim)
         {
             if(cd <= 0) throw new Exception("Invalid input: cd/m2 value must be greater than 0.");
 
-            return -10 * Math.Log10(cd / maxStim);
+            // If you don't cast to double, it concatenates as an integer.
+            return -10 * Math.Log10((double)cd / maxStim);
         }
     }
 }
